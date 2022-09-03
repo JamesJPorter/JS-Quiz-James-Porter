@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+body  {
+    background-color: aquamarine;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+#quiz-header {
+  margin-top: 6rem;
+}
+
+.quiz {
+   margin-top: 3rem;
+}
+
+#quizContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
