@@ -22,6 +22,16 @@ btn2.setAttribute("type", "subimt");
 btn3.setAttribute("type", "subimt");
 btn4.setAttribute("type", "subimt");
 
+// storing questions as objects
+var questionsAndAnswers = {
+  Questions: ["What is the purpose of a function in JavaScript?", "Where in an HTML file is it best to link to script.js?", "What is the DOM?"],
+  Q1IncorrectAnswers: "to contain a string",
+  correctAnswers: "to interact with the DOM",
+  Q4: "to contain code which runs when the function is invoked",
+};
+
+console.log(questionsAndAnswers.Questions[1]);
+
 var questionBtns = (btn1, btn2, btn3, btn4);
 
 var timer;
@@ -115,6 +125,10 @@ function runQuizQ2() {
   quizContainer.appendChild(btn2);
   quizContainer.appendChild(btn3);
   quizContainer.appendChild(btn4);
+  if (btn3.addEventListener("click", answerCorrect)) {
+  } else {
+    answerIncorrect;
+  }
   btn1.addEventListener("click", runQuizQ3);
   btn2.addEventListener("click", runQuizQ3);
   btn3.addEventListener("click", runQuizQ3);
