@@ -5,12 +5,15 @@ var quizContainer = document.getElementById("quizContainer");
 var h2El = document.getElementById("quizHeader");
 var quiz = document.getElementById("quiz");
 var answerNotif = document.getElementById("answerNotif");
+var h2ElQuizHead = document.getElementById("quizHeader");
 
 // Creating elements to be used in live quiz
-var h2ElQuizHead = document.getElementById("quizHeader");
 var quizQuestionEl = document.createElement("h3");
 var answerContainer = document.createElement("div");
 var answerResponse = document.createElement("h3");
+var initialEntryForm = document.createElement("form");
+var firstInitialEntry = document.createElement("input");
+var lastInitialEntry = document.createElement("input");
 
 // creating buttons to select question answers
 var btn1 = document.createElement("button");
@@ -24,13 +27,30 @@ btn4.setAttribute("type", "subimt");
 
 // storing questions as objects
 var questionsAndAnswers = {
-  Questions: ["What is the purpose of a function in JavaScript?", "Where in an HTML file is it best to link to script.js?", "What is the DOM?"],
-  Q1IncorrectAnswers: "to contain a string",
-  correctAnswers: "to interact with the DOM",
-  Q4: "to contain code which runs when the function is invoked",
+  questions: [
+    "What is the purpose of a function in JavaScript?",
+    "Where in an HTML file is it best to link to script.js?",
+    "What is the DOM?",
+  ],
+  incorrectAnswers: [
+    "to contain a string",
+    "to contain an array",
+    "to interact with the DOM",
+    "within the head",
+    "between the head and the body",
+    "in the footer",
+    "The Document Object Model",
+    "An outline of all page contents",
+    "Door Open Message",
+  ],
+  correctAnswers: [
+    "to contain code which runs when the function is invoked",
+    "At the bottom of the body",
+    "A web API",
+  ],
 };
 
-console.log(questionsAndAnswers.Questions[1]);
+console.log(questionsAndAnswers.questions[1]);
 
 var questionBtns = (btn1, btn2, btn3, btn4);
 
@@ -66,12 +86,11 @@ function runQuizQ1() {
   // start.preventDefault();
   h2ElQuizHead.textContent = "Quiz Question #1";
   quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent =
-    "What is the purpose of a function in JavaScript?";
-  btn1.textContent = "to contain an array";
-  btn2.textContent = "to contain a string";
-  btn3.textContent = "to interact with the DOM";
-  btn4.textContent = "to contain code which runs when the function is invoked";
+  quizQuestionEl.textContent = questionsAndAnswers.questions[0];
+  btn1.textContent = questionsAndAnswers.incorrectAnswers[0];
+  btn2.textContent = questionsAndAnswers.incorrectAnswers[1];
+  btn3.textContent = questionsAndAnswers.incorrectAnswers[2];
+  btn4.textContent = questionsAndAnswers.correctAnswers[0];
   btn1.setAttribute("style", "margin: 1rem;");
   btn2.setAttribute("style", "margin: 1rem;");
   btn3.setAttribute("style", "margin: 1rem;");
@@ -111,12 +130,11 @@ function runQuizQ2() {
   // start.preventDefault();
   h2ElQuizHead.textContent = "Quiz Question #2";
   quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent =
-    "Where in an HTML file is it best to link to script.js?";
-  btn1.textContent = "within the head";
-  btn2.textContent = "between the head and the body";
-  btn3.textContent = "At the bottom of the body";
-  btn4.textContent = "in the footer";
+  quizQuestionEl.textContent = questionsAndAnswers.questions[1];
+  btn1.textContent = questionsAndAnswers.correctAnswers[1];
+  btn2.textContent = questionsAndAnswers.incorrectAnswers[4];
+  btn3.textContent = questionsAndAnswers.incorrectAnswers[5];
+  btn4.textContent = questionsAndAnswers.incorrectAnswers[3];
   btn1.setAttribute("style", "margin: 1rem;");
   btn2.setAttribute("style", "margin: 1rem;");
   btn3.setAttribute("style", "margin: 1rem;");
@@ -141,11 +159,11 @@ function runQuizQ3() {
   // start.preventDefault();
   h2ElQuizHead.textContent = "Quiz Question #3";
   quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent = "What is the DOM?";
-  btn1.textContent = "A web API";
-  btn2.textContent = "The Document Object Model";
-  btn3.textContent = "An outline of all page contents";
-  btn4.textContent = "Door Open Message";
+  quizQuestionEl.textContent = questionsAndAnswers.questions[2];
+  btn1.textContent = questionsAndAnswers.incorrectAnswers[6];
+  btn2.textContent = questionsAndAnswers.correctAnswers[2];
+  btn3.textContent = questionsAndAnswers.incorrectAnswers[8];
+  btn4.textContent = questionsAndAnswers.incorrectAnswers[7];
   btn1.setAttribute("style", "margin: 1rem;");
   btn2.setAttribute("style", "margin: 1rem;");
   btn3.setAttribute("style", "margin: 1rem;");
@@ -160,6 +178,14 @@ function runQuizQ3() {
   btn4.addEventListener("click", showResults);
 }
 
-function showResults() {}
+function showResults() {
+    quiz.setAttribute("style", "display: none;")
+    h2ElQuizHead.textContent = "Quiz Results";
+    quizContainer.appendChild(quizQuestionEl);
+    btn1.setAttribute("style", "display: none;")
+    btn2.setAttribute("style", "display: none;")
+    btn3.setAttribute("style", "display: none;")
+    btn4.setAttribute("style", "display: none;")
+}
 
 start.addEventListener("click", runQuizQ1);
