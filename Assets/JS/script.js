@@ -69,24 +69,45 @@ function timer() {
     if (sec < 0) {
       clearInterval(timer);
     }
-    }, 1000);
+  }, 1000);
 }
 
 function startQuiz() {
   // start timer
   timer()
 
-// display first question
-displayQuestion(quizContent[currentIdx])
+  // display first question
+  displayQuestion(quizContent[currentIdx])
 }
 
 function displayQuestion(nextQuestion) {
-  console.log('nextQuestion', nextQuestion);
+  // console.log('nextQuestion', nextQuestion);
   // logic to display the question
-  var question1 = quizContent[currentIdx]
-
+  h2ElQuizHead.textContent = quizContent[currentIdx].header;
+  quizContainer.appendChild(quizQuestionEl);
+  quizQuestionEl.textContent = quizContent[currentIdx].question;
+  btn1.textContent = quizContent[currentIdx].options[0];
+  btn2.textContent = quizContent[currentIdx].options[1];
+  btn3.textContent = quizContent[currentIdx].options[2];
+  btn4.textContent = quizContent[currentIdx].options[3];
+  quizContainer.appendChild(btn1);
+  quizContainer.appendChild(btn2);
+  quizContainer.appendChild(btn3);
+  quizContainer.appendChild(btn4);
+  btn1.setAttribute("style", "margin: 1rem;");
+  btn2.setAttribute("style", "margin: 1rem;");
+  btn3.setAttribute("style", "margin: 1rem;");
+  btn4.setAttribute("style", "margin: 1rem;");
 
   // increment currentIdx
+  if (btn1.addEventListener("click", displayQuestion(quizContent[currentIdx]))){
+    for (let i = 0; i < quizContent.length; i++) {
+      currentIdx.value += i;
+      console.log(currentIdx.value)
+    }
+  } else {
+    return
+  }
 }
 
 start.addEventListener("click", startQuiz);
@@ -176,37 +197,25 @@ function answerIncorrect() {
 
 // event listener for all quizQ2 answers to move to quizQ3
 
-function runQuizQ3() {
-  // start.preventDefault();
-  h2ElQuizHead.textContent = "Quiz Question #3";
-  quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent = questionsAndAnswers.questions[2];
-  btn1.textContent = questionsAndAnswers.incorrectAnswers[6];
-  btn2.textContent = questionsAndAnswers.correctAnswers[2];
-  btn3.textContent = questionsAndAnswers.incorrectAnswers[8];
-  btn4.textContent = questionsAndAnswers.incorrectAnswers[7];
-  btn1.setAttribute("style", "margin: 1rem;");
-  btn2.setAttribute("style", "margin: 1rem;");
-  btn3.setAttribute("style", "margin: 1rem;");
-  btn4.setAttribute("style", "margin: 1rem;");
-  quizContainer.appendChild(btn1);
-  quizContainer.appendChild(btn2);
-  quizContainer.appendChild(btn3);
-  quizContainer.appendChild(btn4);
-  btn1.addEventListener("click", showResults);
-  btn2.addEventListener("click", showResults);
-  btn3.addEventListener("click", showResults);
-  btn4.addEventListener("click", showResults);
-}
-
-function showResults() {
-  quiz.setAttribute("style", "display: none;")
-  h2ElQuizHead.textContent = "Quiz Results";
-  quizContainer.appendChild(quizQuestionEl);
-  btn1.setAttribute("style", "display: none;")
-  btn2.setAttribute("style", "display: none;")
-  btn3.setAttribute("style", "display: none;")
-  btn4.setAttribute("style", "display: none;")
-}
-
-// start.addEventListener("click", runQuizQ1);
+// function runQuizQ3() {
+//   // start.preventDefault();
+//   h2ElQuizHead.textContent = "Quiz Question #3";
+//   quizContainer.appendChild(quizQuestionEl);
+//   quizQuestionEl.textContent = questionsAndAnswers.questions[2];
+//   btn1.textContent = questionsAndAnswers.incorrectAnswers[6];
+//   btn2.textContent = questionsAndAnswers.correctAnswers[2];
+//   btn3.textContent = questionsAndAnswers.incorrectAnswers[8];
+//   btn4.textContent = questionsAndAnswers.incorrectAnswers[7];
+//   btn1.setAttribute("style", "margin: 1rem;");
+//   btn2.setAttribute("style", "margin: 1rem;");
+//   btn3.setAttribute("style", "margin: 1rem;");
+//   btn4.setAttribute("style", "margin: 1rem;");
+//   quizContainer.appendChild(btn1);
+//   quizContainer.appendChild(btn2);
+//   quizContainer.appendChild(btn3);
+//   quizContainer.appendChild(btn4);
+//   btn1.addEventListener("click", showResults);
+//   btn2.addEventListener("click", showResults);
+//   btn3.addEventListener("click", showResults);
+//   btn4.addEventListener("click", showResults);
+// }
