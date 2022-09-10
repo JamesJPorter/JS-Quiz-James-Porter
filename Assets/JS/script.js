@@ -103,7 +103,7 @@ function displayQuestion(nextQuestion) {
   if (btn1.addEventListener("click", displayQuestion(quizContent[currentIdx]))){
     for (let i = 0; i < quizContent.length; i++) {
       currentIdx.value += i;
-      console.log(currentIdx.value)
+      return quizContent[currentIdx]
     }
   } else {
     return
