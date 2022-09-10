@@ -26,37 +26,74 @@ btn3.setAttribute("type", "subimt");
 btn4.setAttribute("type", "subimt");
 
 // storing questions as objects
-var questionsAndAnswers = {
-  questions: [
-    "What is the purpose of a function in JavaScript?",
-    "Where in an HTML file is it best to link to script.js?",
-    "What is the DOM?",
-  ],
-  incorrectAnswers: [
-    "to contain a string",
-    "to contain an array",
-    "to interact with the DOM",
-    "within the head",
-    "between the head and the body",
-    "in the footer",
-    "The Document Object Model",
-    "An outline of all page contents",
-    "Door Open Message",
-  ],
-  correctAnswers: [
-    "to contain code which runs when the function is invoked",
-    "At the bottom of the body",
-    "A web API",
-  ],
-};
+var quizContent = [
+  {
+    header: "Quiz Question #1",
+    question: "What is the purpose of a function in JavaScript?",
+    options: [
+      "to contain a string",
+      "to contain an array",
+      "to interact with the DOM", "to contain code which runs when the function is invoked"
+    ],
+    answer: "to contain code which runs when the function is invoked"
+  },
+  {
+    header: "Quiz Question #2",
+    question: "Where in an HTML file is it best to link to script.js?",
+    options: [
+      "within the head",
+      "between the head and the body",
+      "in the footer", "At the bottom of the body",
+    ],
+    answer: "At the bottom of the body"
+  },
+  {
+    header: "Quiz Question #3",
+    question: "What is the DOM?",
+    options: [
+      "The Document Object Model",
+      "An outline of all page contents",
+      "Door Open Message", "A web API"
+    ],
+    answer: "A web API"
+  },
+]
+var currentIdx = 0;
 
-console.log(questionsAndAnswers.questions[1]);
+var sec = 60;
+
+function timer() {
+  var timer = setInterval(function () {
+    document.getElementById("countdown").innerHTML = '00:' + sec;
+    sec--;
+    if (sec < 0) {
+      clearInterval(timer);
+    }
+    }, 1000);
+}
+
+function startQuiz() {
+  // start timer
+  timer()
+
+// display first question
+displayQuestion(quizContent[currentIdx])
+}
+
+function displayQuestion(nextQuestion) {
+  console.log('nextQuestion', nextQuestion);
+  // logic to display the question
+  var question1 = quizContent[currentIdx]
+
+
+  // increment currentIdx
+}
+
+start.addEventListener("click", startQuiz);
 
 var questionBtns = (btn1, btn2, btn3, btn4);
 
-var timer;
-
-// adding text & styles to elements created and in index
+// adding text & styles to elements created in JS and in index
 h2ElQuizHead.textContent = "Welcome! Click below to begin the quiz";
 quizContainer.setAttribute(
   "style",
@@ -82,76 +119,60 @@ function answerIncorrect() {
   answerNotif.appendChild(answerResponse);
 }
 
-function runQuizQ1() {
-  // start.preventDefault();
-  h2ElQuizHead.textContent = "Quiz Question #1";
-  quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent = questionsAndAnswers.questions[0];
-  btn1.textContent = questionsAndAnswers.incorrectAnswers[0];
-  btn2.textContent = questionsAndAnswers.incorrectAnswers[1];
-  btn3.textContent = questionsAndAnswers.incorrectAnswers[2];
-  btn4.textContent = questionsAndAnswers.correctAnswers[0];
-  btn1.setAttribute("style", "margin: 1rem;");
-  btn2.setAttribute("style", "margin: 1rem;");
-  btn3.setAttribute("style", "margin: 1rem;");
-  btn4.setAttribute("style", "margin: 1rem;");
-  quizContainer.appendChild(btn1);
-  quizContainer.appendChild(btn2);
-  quizContainer.appendChild(btn3);
-  quizContainer.appendChild(btn4);
-  if (btn4.addEventListener("click", answerCorrect)) {
-  } else {
-    answerIncorrect;
-  }
-  btn1.addEventListener("click", runQuizQ2);
-  btn2.addEventListener("click", runQuizQ2);
-  btn3.addEventListener("click", runQuizQ2);
-  btn4.addEventListener("click", runQuizQ2);
-  console.log(answerResponse);
-}
-
-// function saveAnswerQ1() {
-//   if (btn1) {
-//     localStorage.setItem("Answer1", btn1.textContent);
+// function runQuizQ1() {
+//   // start.preventDefault();
+//   h2ElQuizHead.textContent = "Quiz Question #1";
+//   quizContainer.appendChild(quizQuestionEl);
+//   quizQuestionEl.textContent = questionsAndAnswers.questions[0];
+//   btn1.textContent = questionsAndAnswers.incorrectAnswers[0];
+//   btn2.textContent = questionsAndAnswers.incorrectAnswers[1];
+//   btn3.textContent = questionsAndAnswers.incorrectAnswers[2];
+//   btn4.textContent = questionsAndAnswers.correctAnswers[0];
+//   btn1.setAttribute("style", "margin: 1rem;");
+//   btn2.setAttribute("style", "margin: 1rem;");
+//   btn3.setAttribute("style", "margin: 1rem;");
+//   btn4.setAttribute("style", "margin: 1rem;");
+//   quizContainer.appendChild(btn1);
+//   quizContainer.appendChild(btn2);
+//   quizContainer.appendChild(btn3);
+//   quizContainer.appendChild(btn4);
+//   if (btn4.addEventListener("click", answerCorrect)) {
+//   } else {
+//     answerIncorrect;
 //   }
-//   if (btn2) {
-//     localStorage.setItem("Answer1", btn2.textContent);
-//   }
-//   if (btn3) {
-//     localStorage.setItem("Answer1", btn3.textContent);
-//   }
-//   if (btn4) {
-//     localStorage.setItem("Answer1", btn4.textContent);
-//   }
-//     return;
+//   btn1.addEventListener("click", runQuizQ2);
+//   btn2.addEventListener("click", runQuizQ2);
+//   btn3.addEventListener("click", runQuizQ2);
+//   btn4.addEventListener("click", runQuizQ2);
+//   console.log(answerResponse);
 // }
 
-function runQuizQ2() {
-  // start.preventDefault();
-  h2ElQuizHead.textContent = "Quiz Question #2";
-  quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent = questionsAndAnswers.questions[1];
-  btn1.textContent = questionsAndAnswers.correctAnswers[1];
-  btn2.textContent = questionsAndAnswers.incorrectAnswers[4];
-  btn3.textContent = questionsAndAnswers.incorrectAnswers[5];
-  btn4.textContent = questionsAndAnswers.incorrectAnswers[3];
-  btn1.setAttribute("style", "margin: 1rem;");
-  btn2.setAttribute("style", "margin: 1rem;");
-  btn3.setAttribute("style", "margin: 1rem;");
-  btn4.setAttribute("style", "margin: 1rem;");
-  quizContainer.appendChild(btn1);
-  quizContainer.appendChild(btn2);
-  quizContainer.appendChild(btn3);
-  quizContainer.appendChild(btn4);
-  if (btn3.addEventListener("click", answerCorrect)) {
-  } else {
-    answerIncorrect;
-  }
-  btn1.addEventListener("click", runQuizQ3);
-  btn2.addEventListener("click", runQuizQ3);
-  btn3.addEventListener("click", runQuizQ3);
-  btn4.addEventListener("click", runQuizQ3);
-}
+// function runQuizQ2() {
+//   // start.preventDefault();
+//   h2ElQuizHead.textContent = "Quiz Question #2";
+//   quizContainer.appendChild(quizQuestionEl);
+//   quizQuestionEl.textContent = questionsAndAnswers.questions[1];
+//   btn1.textContent = questionsAndAnswers.correctAnswers[1];
+//   btn2.textContent = questionsAndAnswers.incorrectAnswers[4];
+//   btn3.textContent = questionsAndAnswers.incorrectAnswers[5];
+//   btn4.textContent = questionsAndAnswers.incorrectAnswers[3];
+//   btn1.setAttribute("style", "margin: 1rem;");
+//   btn2.setAttribute("style", "margin: 1rem;");
+//   btn3.setAttribute("style", "margin: 1rem;");
+//   btn4.setAttribute("style", "margin: 1rem;");
+//   quizContainer.appendChild(btn1);
+//   quizContainer.appendChild(btn2);
+//   quizContainer.appendChild(btn3);
+//   quizContainer.appendChild(btn4);
+//   if (btn3.addEventListener("click", answerCorrect)) {
+//   } else {
+//     answerIncorrect;
+//   }
+//   btn1.addEventListener("click", runQuizQ3);
+//   btn2.addEventListener("click", runQuizQ3);
+//   btn3.addEventListener("click", runQuizQ3);
+//   btn4.addEventListener("click", runQuizQ3);
+// }
 
 // event listener for all quizQ2 answers to move to quizQ3
 
@@ -179,13 +200,13 @@ function runQuizQ3() {
 }
 
 function showResults() {
-    quiz.setAttribute("style", "display: none;")
-    h2ElQuizHead.textContent = "Quiz Results";
-    quizContainer.appendChild(quizQuestionEl);
-    btn1.setAttribute("style", "display: none;")
-    btn2.setAttribute("style", "display: none;")
-    btn3.setAttribute("style", "display: none;")
-    btn4.setAttribute("style", "display: none;")
+  quiz.setAttribute("style", "display: none;")
+  h2ElQuizHead.textContent = "Quiz Results";
+  quizContainer.appendChild(quizQuestionEl);
+  btn1.setAttribute("style", "display: none;")
+  btn2.setAttribute("style", "display: none;")
+  btn3.setAttribute("style", "display: none;")
+  btn4.setAttribute("style", "display: none;")
 }
 
-start.addEventListener("click", runQuizQ1);
+// start.addEventListener("click", runQuizQ1);
