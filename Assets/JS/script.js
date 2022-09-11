@@ -25,6 +25,8 @@ btn2.setAttribute("type", "subimt");
 btn3.setAttribute("type", "subimt");
 btn4.setAttribute("type", "subimt");
 
+var answerBtns = [btn1, btn2, btn3, btn4];
+
 // storing questions as objects
 var quizContent = [
   {
@@ -78,18 +80,24 @@ function startQuiz() {
 
   // display first question
   displayQuestion(quizContent[currentIdx])
+
+  answerBtns.forEach(function (button) {
+    button.addEventListener("click", displayQuestion)
+  })
 }
 
-function displayQuestion(nextQuestion) {
+function displayQuestion() {
   // console.log('nextQuestion', nextQuestion);
   // logic to display the question
+  var nextQuestion = quizContent[currentIdx];
+  start.setAttribute("style", "display: none")
   h2ElQuizHead.textContent = quizContent[currentIdx].header;
   quizContainer.appendChild(quizQuestionEl);
   quizQuestionEl.textContent = quizContent[currentIdx].question;
-  btn1.textContent = quizContent[currentIdx].options[0];
-  btn2.textContent = quizContent[currentIdx].options[1];
-  btn3.textContent = quizContent[currentIdx].options[2];
-  btn4.textContent = quizContent[currentIdx].options[3];
+  btn1.textContent = nextQuestion.options[0];
+  btn2.textContent = nextQuestion.options[1];
+  btn3.textContent = nextQuestion.options[2];
+  btn4.textContent = nextQuestion.options[3];
   quizContainer.appendChild(btn1);
   quizContainer.appendChild(btn2);
   quizContainer.appendChild(btn3);
@@ -98,19 +106,26 @@ function displayQuestion(nextQuestion) {
   btn2.setAttribute("style", "margin: 1rem;");
   btn3.setAttribute("style", "margin: 1rem;");
   btn4.setAttribute("style", "margin: 1rem;");
+  answerBtns.addEventListener("click", answerVerification)
 
   // increment currentIdx
-  if (btn1.addEventListener("click", displayQuestion(quizContent[currentIdx]))){
-    for (let i = 0; i < quizContent.length; i++) {
-      currentIdx.value += i;
-      return quizContent[currentIdx]
-    }
-  } else {
-    return
-  }
+  currentIdx++
 }
 
 start.addEventListener("click", startQuiz);
+
+function answerVerification(button) {
+  if (button.value == quizContent.answer) {
+    answerNotif.setAttribute("style", "display: flex;");
+    answerResponse.textContent = "CORRECT!";
+    answerNotif.appendChild(answerResponse);
+  }
+  else {
+    answerNotif.setAttribute("style", "display: flex;");
+    answerResponse.textContent = "INCORRECT";
+    answerNotif.appendChild(answerResponse);
+  }
+}
 
 var questionBtns = (btn1, btn2, btn3, btn4);
 
