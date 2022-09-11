@@ -106,7 +106,9 @@ function displayQuestion() {
   btn2.setAttribute("style", "margin: 1rem;");
   btn3.setAttribute("style", "margin: 1rem;");
   btn4.setAttribute("style", "margin: 1rem;");
-  answerBtns.addEventListener("click", answerVerification)
+  answerBtns.forEach(function (button) {
+    button.addEventListener("click", answerVerification)
+  })
 
   // increment currentIdx
   currentIdx++
