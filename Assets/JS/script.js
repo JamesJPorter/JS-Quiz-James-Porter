@@ -117,15 +117,17 @@ function displayQuestion() {
 start.addEventListener("click", startQuiz);
 
 function answerVerification(button) {
-  if (button.value == quizContent.answer) {
+  if (button == quizContent.answer) {
     answerNotif.setAttribute("style", "display: flex;");
     answerResponse.textContent = "CORRECT!";
     answerNotif.appendChild(answerResponse);
+    console.log(button)
   }
   else {
     answerNotif.setAttribute("style", "display: flex;");
     answerResponse.textContent = "INCORRECT";
     answerNotif.appendChild(answerResponse);
+    console.log(button)
   }
 }
 
