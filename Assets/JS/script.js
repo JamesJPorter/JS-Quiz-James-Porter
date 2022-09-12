@@ -12,8 +12,11 @@ var quizQuestionEl = document.createElement("h3");
 var answerContainer = document.createElement("div");
 var answerResponse = document.createElement("h3");
 var initialEntryForm = document.createElement("form");
+initialEntryForm.setAttribute("type", "display: flex; justify-content: space-around; margin: 2rem;")
 var firstInitialEntry = document.createElement("input");
+firstInitialEntry.setAttribute("type", "placeholder: First Name");
 var lastInitialEntry = document.createElement("input");
+lastInitialEntry.setAttribute("type", "placeholder: Last Name");
 
 // creating buttons to select question answers
 var btn1 = document.createElement("button");
@@ -24,6 +27,14 @@ btn1.setAttribute("type", "subimt");
 btn2.setAttribute("type", "subimt");
 btn3.setAttribute("type", "subimt");
 btn4.setAttribute("type", "subimt");
+var score = {
+  firstName: firstInitialEntry.value.trim(),
+  lastName: lastInitialEntry.value.trim(),
+  time: countdown.value
+}
+
+var savedScores = [];
+var finalScore = timer.value;
 
 var answerBtns = [btn1, btn2, btn3, btn4];
 
@@ -88,46 +99,80 @@ function startQuiz() {
 
 function displayQuestion() {
   // console.log('nextQuestion', nextQuestion);
-  // logic to display the question
-  var nextQuestion = quizContent[currentIdx];
-  start.setAttribute("style", "display: none")
-  h2ElQuizHead.textContent = quizContent[currentIdx].header;
-  quizContainer.appendChild(quizQuestionEl);
-  quizQuestionEl.textContent = quizContent[currentIdx].question;
-  btn1.textContent = nextQuestion.options[0];
-  btn2.textContent = nextQuestion.options[1];
-  btn3.textContent = nextQuestion.options[2];
-  btn4.textContent = nextQuestion.options[3];
-  quizContainer.appendChild(btn1);
-  quizContainer.appendChild(btn2);
-  quizContainer.appendChild(btn3);
-  quizContainer.appendChild(btn4);
-  btn1.setAttribute("style", "margin: 1rem;");
-  btn2.setAttribute("style", "margin: 1rem;");
-  btn3.setAttribute("style", "margin: 1rem;");
-  btn4.setAttribute("style", "margin: 1rem;");
+  
+  // logic to discern whether to display question or save score screen
   answerBtns.forEach(function (button) {
     button.addEventListener("click", answerVerification)
+    if (currentIdx >= quizContent.length) {
+      saveScore()
+    } else {
+      // logic to display the question
+      var nextQuestion = quizContent[currentIdx];
+      start.setAttribute("style", "display: none")
+      h2ElQuizHead.textContent = quizContent[currentIdx].header;
+      quizContainer.appendChild(quizQuestionEl);
+      quizQuestionEl.textContent = quizContent[currentIdx].question;
+      btn1.textContent = nextQuestion.options[0];
+      btn2.textContent = nextQuestion.options[1];
+      btn3.textContent = nextQuestion.options[2];
+      btn4.textContent = nextQuestion.options[3];
+      quizContainer.appendChild(btn1);
+      quizContainer.appendChild(btn2);
+      quizContainer.appendChild(btn3);
+      quizContainer.appendChild(btn4);
+      btn1.setAttribute("style", "margin: 1rem;");
+      btn2.setAttribute("style", "margin: 1rem;");
+      btn3.setAttribute("style", "margin: 1rem;");
+      btn4.setAttribute("style", "margin: 1rem;");
+    }
   })
+  // // logic to display the question
+  // var nextQuestion = quizContent[currentIdx];
+  // start.setAttribute("style", "display: none")
+  // h2ElQuizHead.textContent = quizContent[currentIdx].header;
+  // quizContainer.appendChild(quizQuestionEl);
+  // quizQuestionEl.textContent = quizContent[currentIdx].question;
+  // btn1.textContent = nextQuestion.options[0];
+  // btn2.textContent = nextQuestion.options[1];
+  // btn3.textContent = nextQuestion.options[2];
+  // btn4.textContent = nextQuestion.options[3];
+  // quizContainer.appendChild(btn1);
+  // quizContainer.appendChild(btn2);
+  // quizContainer.appendChild(btn3);
+  // quizContainer.appendChild(btn4);
+  // btn1.setAttribute("style", "margin: 1rem;");
+  // btn2.setAttribute("style", "margin: 1rem;");
+  // btn3.setAttribute("style", "margin: 1rem;");
+  // btn4.setAttribute("style", "margin: 1rem;");
+}
 
-  // increment currentIdx
-  currentIdx++
+function saveScore() {
+  quizContainer.appendChild(initialEntryForm);
+  initialEntryForm.appendChild(firstInitialEntry);
+  initialEntryForm.appendChild(lastInitialEntry);
+  var finalScore = countdown.textContent;
+  localStorage.setItem("savedScores", JSON.stringify(score))
 }
 
 start.addEventListener("click", startQuiz);
 
-function answerVerification(button) {
-  if (button == quizContent.answer) {
+function answerVerification(event) {
+  var userAnswer = event.target.textContent;
+  if (userAnswer === quizContent[currentIdx].answer) {
     answerNotif.setAttribute("style", "display: flex;");
     answerResponse.textContent = "CORRECT!";
     answerNotif.appendChild(answerResponse);
-    console.log(button)
+    console.log(userAnswer);
+    console.log(quizContent[currentIdx].answer)
+    currentIdx++
   }
   else {
     answerNotif.setAttribute("style", "display: flex;");
     answerResponse.textContent = "INCORRECT";
     answerNotif.appendChild(answerResponse);
-    console.log(button)
+    console.log(userAnswer);
+    console.log(quizContent[currentIdx].answer)
+    currentIdx++
   }
 }
 
@@ -146,18 +191,6 @@ answerNotif.setAttribute(
 );
 
 answerResponse.setAttribute("style", "margin-top: 1.5rem;");
-
-function answerCorrect() {
-  answerNotif.setAttribute("style", "display: flex;");
-  answerResponse.textContent = "CORRECT!";
-  answerNotif.appendChild(answerResponse);
-}
-
-function answerIncorrect() {
-  answerNotif.setAttribute("style", "display: flex;");
-  answerResponse.textContent = "INCORRECT";
-  answerNotif.appendChild(answerResponse);
-}
 
 // function runQuizQ1() {
 //   // start.preventDefault();
