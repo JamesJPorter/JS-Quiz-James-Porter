@@ -2,10 +2,19 @@
 var countdown = document.getElementById("countdown");
 var start = document.getElementById("start");
 var quizContainer = document.getElementById("quizContainer");
+quizContainer.setAttribute(
+  "style",
+  "margin: 5rem; border: 3px solid black; padding: 2rem; width: 40%; border-radius: 50px; background-color: #ffffc7ff; display: flex; justify-content: center; align-items: center; flex-direction: column;"
+);
 var h2El = document.getElementById("quizHeader");
 var quiz = document.getElementById("quiz");
 var answerNotif = document.getElementById("answerNotif");
+answerNotif.setAttribute(
+  "style",
+  "margin-top: 1rem; border: dashed grey 3px; background-color: #ffffc7ff; display: none;"
+);
 var h2ElQuizHead = document.getElementById("quizHeader");
+h2ElQuizHead.textContent = "Welcome! Click below to begin the quiz";
 
 // Creating elements to be used in live quiz
 var quizQuestionEl = document.createElement("h3");
@@ -176,17 +185,5 @@ function answerVerification(event) {
     currentIdx++
   }
 }
-
-// adding text & styles to elements created in JS and in index
-h2ElQuizHead.textContent = "Welcome! Click below to begin the quiz";
-quizContainer.setAttribute(
-  "style",
-  "margin: 5rem; border: 3px solid black; padding: 2rem; width: 40%; border-radius: 50px; background-color: #ffffc7ff; display: flex; justify-content: center; align-items: center; flex-direction: column;"
-);
-
-answerNotif.setAttribute(
-  "style",
-  "margin-top: 1rem; border: dashed grey 3px; background-color: #ffffc7ff; display: none;"
-);
 
 answerResponse.setAttribute("style", "margin-top: 1.5rem;");
