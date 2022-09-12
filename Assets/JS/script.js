@@ -12,11 +12,15 @@ var quizQuestionEl = document.createElement("h3");
 var answerContainer = document.createElement("div");
 var answerResponse = document.createElement("h3");
 var initialEntryForm = document.createElement("form");
-initialEntryForm.setAttribute("style", "display: flex; justify-content: space-between; margin: 2rem; padding: 3rem")
+initialEntryForm.setAttribute("style", "display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;")
 var firstInitialEntry = document.createElement("input");
 firstInitialEntry.setAttribute("placeholder", "First Name");
+firstInitialEntry.setAttribute("style", "margin: 1rem;")
 var lastInitialEntry = document.createElement("input");
 lastInitialEntry.setAttribute("placeholder", "Last Name");
+lastInitialEntry.setAttribute("style", "margin: 1rem;")
+var submitScoreBtn = document.createElement("button");
+submitScoreBtn.textContent = "Save Score"
 
 // creating buttons to select question answers
 var btn1 = document.createElement("button");
@@ -27,15 +31,9 @@ btn1.setAttribute("type", "subimt");
 btn2.setAttribute("type", "subimt");
 btn3.setAttribute("type", "subimt");
 btn4.setAttribute("type", "subimt");
-var score = {
-  firstName: firstInitialEntry.value.trim(),
-  lastName: lastInitialEntry.value.trim(),
-  time: countdown.value
-}
 
 var savedScores = [];
 var finalScore = timer.value;
-
 var answerBtns = [btn1, btn2, btn3, btn4];
 
 // storing questions as objects
@@ -72,11 +70,12 @@ var quizContent = [
   },
 ]
 var currentIdx = 0;
-
 var sec = 60;
+var time;
+var user;
 
 function timer() {
-  var time = setInterval(function () {
+  time = setInterval(function () {
     document.getElementById("countdown").innerHTML = '00:' + sec;
     sec--;
     if (sec < 0) {
@@ -98,15 +97,15 @@ function startQuiz() {
 }
 
 function displayQuestion() {
-  // console.log('nextQuestion', nextQuestion);
-
   // logic to discern whether to display question or save score screen
   answerBtns.forEach(function (button) {
     button.addEventListener("click", answerVerification)
-    if (currentIdx >= quizContent.length) {
-      saveScore()
+    if (currentIdx == quizContent.length) {
+      endQuiz()
+      clearInterval(time);
     } else {
       // logic to display the question
+      start.remove()
       var nextQuestion = quizContent[currentIdx];
       start.setAttribute("style", "display: none")
       h2ElQuizHead.textContent = quizContent[currentIdx].header;
@@ -128,13 +127,32 @@ function displayQuestion() {
   })
 }
 
-function saveScore() {
+function endQuiz() {
+  h2ElQuizHead.textContent = "Would you like to save your score?"
+  quiz.remove();
+  quizQuestionEl.remove()
+  btn1.remove()
+  btn2.remove()
+  btn3.remove()
+  btn4.remove()
+  answerResponse.remove()
   quizContainer.appendChild(initialEntryForm);
   initialEntryForm.appendChild(firstInitialEntry);
   initialEntryForm.appendChild(lastInitialEntry);
-  var finalScore = countdown.textContent;
-  localStorage.setItem("savedScores", JSON.stringify(score))
+  initialEntryForm.appendChild(submitScoreBtn);
 }
+
+submitScoreBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  var score = {
+    firstName: firstInitialEntry.value.trim(),
+    lastName: lastInitialEntry.value.trim(),
+    yourTime: sec.value
+  }
+  localStorage.setItem("savedScores", JSON.stringify(score));
+  console.log(localStorage.getItem("savedScores", JSON.parse(score)))
+});
+
 
 start.addEventListener("click", startQuiz);
 
@@ -154,12 +172,10 @@ function answerVerification(event) {
     answerNotif.appendChild(answerResponse);
     console.log(userAnswer);
     console.log(quizContent[currentIdx].answer)
+    sec = sec - 10
     currentIdx++
-    let newTime = sec - 10
   }
 }
-
-var questionBtns = (btn1, btn2, btn3, btn4);
 
 // adding text & styles to elements created in JS and in index
 h2ElQuizHead.textContent = "Welcome! Click below to begin the quiz";
@@ -174,83 +190,3 @@ answerNotif.setAttribute(
 );
 
 answerResponse.setAttribute("style", "margin-top: 1.5rem;");
-
-// function runQuizQ1() {
-//   // start.preventDefault();
-//   h2ElQuizHead.textContent = "Quiz Question #1";
-//   quizContainer.appendChild(quizQuestionEl);
-//   quizQuestionEl.textContent = questionsAndAnswers.questions[0];
-//   btn1.textContent = questionsAndAnswers.incorrectAnswers[0];
-//   btn2.textContent = questionsAndAnswers.incorrectAnswers[1];
-//   btn3.textContent = questionsAndAnswers.incorrectAnswers[2];
-//   btn4.textContent = questionsAndAnswers.correctAnswers[0];
-//   btn1.setAttribute("style", "margin: 1rem;");
-//   btn2.setAttribute("style", "margin: 1rem;");
-//   btn3.setAttribute("style", "margin: 1rem;");
-//   btn4.setAttribute("style", "margin: 1rem;");
-//   quizContainer.appendChild(btn1);
-//   quizContainer.appendChild(btn2);
-//   quizContainer.appendChild(btn3);
-//   quizContainer.appendChild(btn4);
-//   if (btn4.addEventListener("click", answerCorrect)) {
-//   } else {
-//     answerIncorrect;
-//   }
-//   btn1.addEventListener("click", runQuizQ2);
-//   btn2.addEventListener("click", runQuizQ2);
-//   btn3.addEventListener("click", runQuizQ2);
-//   btn4.addEventListener("click", runQuizQ2);
-//   console.log(answerResponse);
-// }
-
-// function runQuizQ2() {
-//   // start.preventDefault();
-//   h2ElQuizHead.textContent = "Quiz Question #2";
-//   quizContainer.appendChild(quizQuestionEl);
-//   quizQuestionEl.textContent = questionsAndAnswers.questions[1];
-//   btn1.textContent = questionsAndAnswers.correctAnswers[1];
-//   btn2.textContent = questionsAndAnswers.incorrectAnswers[4];
-//   btn3.textContent = questionsAndAnswers.incorrectAnswers[5];
-//   btn4.textContent = questionsAndAnswers.incorrectAnswers[3];
-//   btn1.setAttribute("style", "margin: 1rem;");
-//   btn2.setAttribute("style", "margin: 1rem;");
-//   btn3.setAttribute("style", "margin: 1rem;");
-//   btn4.setAttribute("style", "margin: 1rem;");
-//   quizContainer.appendChild(btn1);
-//   quizContainer.appendChild(btn2);
-//   quizContainer.appendChild(btn3);
-//   quizContainer.appendChild(btn4);
-//   if (btn3.addEventListener("click", answerCorrect)) {
-//   } else {
-//     answerIncorrect;
-//   }
-//   btn1.addEventListener("click", runQuizQ3);
-//   btn2.addEventListener("click", runQuizQ3);
-//   btn3.addEventListener("click", runQuizQ3);
-//   btn4.addEventListener("click", runQuizQ3);
-// }
-
-// event listener for all quizQ2 answers to move to quizQ3
-
-// function runQuizQ3() {
-//   // start.preventDefault();
-//   h2ElQuizHead.textContent = "Quiz Question #3";
-//   quizContainer.appendChild(quizQuestionEl);
-//   quizQuestionEl.textContent = questionsAndAnswers.questions[2];
-//   btn1.textContent = questionsAndAnswers.incorrectAnswers[6];
-//   btn2.textContent = questionsAndAnswers.correctAnswers[2];
-//   btn3.textContent = questionsAndAnswers.incorrectAnswers[8];
-//   btn4.textContent = questionsAndAnswers.incorrectAnswers[7];
-//   btn1.setAttribute("style", "margin: 1rem;");
-//   btn2.setAttribute("style", "margin: 1rem;");
-//   btn3.setAttribute("style", "margin: 1rem;");
-//   btn4.setAttribute("style", "margin: 1rem;");
-//   quizContainer.appendChild(btn1);
-//   quizContainer.appendChild(btn2);
-//   quizContainer.appendChild(btn3);
-//   quizContainer.appendChild(btn4);
-//   btn1.addEventListener("click", showResults);
-//   btn2.addEventListener("click", showResults);
-//   btn3.addEventListener("click", showResults);
-//   btn4.addEventListener("click", showResults);
-// }
