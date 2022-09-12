@@ -12,11 +12,11 @@ var quizQuestionEl = document.createElement("h3");
 var answerContainer = document.createElement("div");
 var answerResponse = document.createElement("h3");
 var initialEntryForm = document.createElement("form");
-initialEntryForm.setAttribute("type", "display: flex; justify-content: space-around; margin: 2rem;")
+initialEntryForm.setAttribute("style", "display: flex; justify-content: space-between; margin: 2rem; padding: 3rem")
 var firstInitialEntry = document.createElement("input");
-firstInitialEntry.setAttribute("type", "placeholder: First Name");
+firstInitialEntry.setAttribute("placeholder", "First Name");
 var lastInitialEntry = document.createElement("input");
-lastInitialEntry.setAttribute("type", "placeholder: Last Name");
+lastInitialEntry.setAttribute("placeholder", "Last Name");
 
 // creating buttons to select question answers
 var btn1 = document.createElement("button");
@@ -76,11 +76,11 @@ var currentIdx = 0;
 var sec = 60;
 
 function timer() {
-  var timer = setInterval(function () {
+  var time = setInterval(function () {
     document.getElementById("countdown").innerHTML = '00:' + sec;
     sec--;
     if (sec < 0) {
-      clearInterval(timer);
+      clearInterval(time);
     }
   }, 1000);
 }
@@ -99,7 +99,7 @@ function startQuiz() {
 
 function displayQuestion() {
   // console.log('nextQuestion', nextQuestion);
-  
+
   // logic to discern whether to display question or save score screen
   answerBtns.forEach(function (button) {
     button.addEventListener("click", answerVerification)
@@ -126,24 +126,6 @@ function displayQuestion() {
       btn4.setAttribute("style", "margin: 1rem;");
     }
   })
-  // // logic to display the question
-  // var nextQuestion = quizContent[currentIdx];
-  // start.setAttribute("style", "display: none")
-  // h2ElQuizHead.textContent = quizContent[currentIdx].header;
-  // quizContainer.appendChild(quizQuestionEl);
-  // quizQuestionEl.textContent = quizContent[currentIdx].question;
-  // btn1.textContent = nextQuestion.options[0];
-  // btn2.textContent = nextQuestion.options[1];
-  // btn3.textContent = nextQuestion.options[2];
-  // btn4.textContent = nextQuestion.options[3];
-  // quizContainer.appendChild(btn1);
-  // quizContainer.appendChild(btn2);
-  // quizContainer.appendChild(btn3);
-  // quizContainer.appendChild(btn4);
-  // btn1.setAttribute("style", "margin: 1rem;");
-  // btn2.setAttribute("style", "margin: 1rem;");
-  // btn3.setAttribute("style", "margin: 1rem;");
-  // btn4.setAttribute("style", "margin: 1rem;");
 }
 
 function saveScore() {
@@ -173,6 +155,7 @@ function answerVerification(event) {
     console.log(userAnswer);
     console.log(quizContent[currentIdx].answer)
     currentIdx++
+    let newTime = sec - 10
   }
 }
 
