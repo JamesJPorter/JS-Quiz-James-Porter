@@ -15,6 +15,7 @@ answerNotif.setAttribute(
 );
 var h2ElQuizHead = document.getElementById("quizHeader");
 h2ElQuizHead.textContent = "Welcome! Click below to begin the quiz";
+var viewHighScores = document.querySelector(".highScoresBtn");
 
 // Creating elements to be used in live quiz
 var quizQuestionEl = document.createElement("h3");
@@ -30,6 +31,9 @@ lastInitialEntry.setAttribute("placeholder", "Last Name");
 lastInitialEntry.setAttribute("style", "margin: 1rem;")
 var submitScoreBtn = document.createElement("button");
 submitScoreBtn.textContent = "Save Score"
+var highScoresFN = document.createElement("h3");
+var highScoresLN = document.createElement("h3");
+var highScoresTime = document.createElement("h3");
 
 // creating buttons to select question answers
 var btn1 = document.createElement("button");
@@ -82,6 +86,7 @@ var currentIdx = 0;
 var sec = 60;
 var time;
 var user;
+var score; 
 
 function timer() {
   time = setInterval(function () {
@@ -156,11 +161,40 @@ submitScoreBtn.addEventListener("click", function (event) {
   var score = {
     firstName: firstInitialEntry.value.trim(),
     lastName: lastInitialEntry.value.trim(),
-    yourTime: sec.value
+    yourTime: sec
   }
+  console.dir(sec)
+  console.dir(firstInitialEntry)
   localStorage.setItem("savedScores", JSON.stringify(score));
-  console.log(localStorage.getItem("savedScores", JSON.parse(score)))
+  console.log(JSON.parse(localStorage.getItem('savedScores')));
 });
+
+viewHighScores.addEventListener("click", function highScores(event) {
+  user1Score = JSON.parse(localStorage.getItem("savedScores"))
+  start.remove()
+  h2ElQuizHead.textContent = "HIGH SCORES"
+  btn1.remove()
+  btn2.remove()
+  btn3.remove()
+  btn4.remove()
+  initialEntryForm.remove()
+  firstInitialEntry.remove()
+  lastInitialEntry.remove()
+  submitScoreBtn.remove()
+  var highScoresContainer = document.createElement("div")
+  highScoresContainer.setAttribute("style", "border: solid 5px #b0413eff; width: 95%; display: flex; flex-direction: row; justify-content: space-between; padding: 2rem; border-radius: 30px ")
+  quizContainer.appendChild(highScoresContainer)
+  highScoresContainer.appendChild(highScoresFN)
+  highScoresFN.textContent = user1Score.firstName
+  console.log(user1Score.firstName)
+  highScoresContainer.appendChild(highScoresLN)
+  highScoresLN.textContent = user1Score.lastName
+  highScoresContainer.appendChild(highScoresTime)
+  highScoresTime.textContent = user1Score.yourTime
+  console.log(user1Score)
+})
+
+console.log(JSON.parse(localStorage.getItem("savedScores", "firstName")))
 
 
 start.addEventListener("click", startQuiz);
